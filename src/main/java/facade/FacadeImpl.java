@@ -233,5 +233,18 @@ public class FacadeImpl implements FacadeGestionProfesseur, FacadeModeleCompetit
 
     }
 
+    @Override
+    public Collection<QCMExtrait> getQCMsPretsPourCompetitions(String cleEtudiant) throws OperationNonAutoriseeException, UtilisateurInexistantException {
+        getEtudiant(cleEtudiant);
+        return qcmsPrets.stream().filter(x -> x.estPublie()).map(x -> new QCMExtrait(x)).collect(Collectors.toList());
+    }
+
+    @Override
+    public QCMExtrait getQCM(String cleEtudiant, String cleQCM) throws OperationNonAutoriseeException, UtilisateurInexistantException, QCMInexistantException {
+        getEtudiant(cleEtudiant);
+        QCM qcm = getQCM(cleQCM);
+        return new QCMExtrait(qcm);
+    }
+
 
 }

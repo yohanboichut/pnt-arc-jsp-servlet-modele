@@ -2,6 +2,7 @@ package facade;
 
 import exceptions.*;
 import modele.QCM;
+import modele.QCMExtrait;
 import modele.Question;
 import modele.ResultatQCM;
 
@@ -132,5 +133,32 @@ public interface FacadeModeleCompetitionQCM {
      +     */
     ResultatQCM getResultat(String cleEtudiant,String cleQCM) throws UtilisateurInexistantException, OperationNonAutoriseeException,
             EtudiantNonInscritException, QCMInexistantException, ResultatsNonCalculesException;
+
+
+    /**
+     * Récupère une collection d'objets QCMExtrait prêts pour les compétitions.
+     *
+     * @param  cleEtudiant  la clé de l'étudiant
+     * @return              la collection d'objets QCMExtrait
+     * @throws OperationNonAutoriseeException  si l'opération n'est pas autorisée
+     * @throws UtilisateurInexistantException si l'utilisateur n'existe pas
+     */
+    Collection<QCMExtrait> getQCMsPretsPourCompetitions(String cleEtudiant) throws OperationNonAutoriseeException, UtilisateurInexistantException;
+
+
+    /**
+     * Récupère un objet QCMExtrait basé sur la clé d'étudiant et la clé de QCM données.
+     *
+     * @param  cleEtudiant                  la clé de l'étudiant
+     * @param  cleQCM                       la clé du QCM
+     * @return                              l'objet QCMExtrait
+     * @throws OperationNonAutoriseeException si l'opération n'est pas autorisée
+     * @throws UtilisateurInexistantException si l'utilisateur n'existe pas
+     * @throws QCMInexistantException         si le QCM n'existe pas
+     */
+
+    QCMExtrait getQCM(String cleEtudiant, String cleQCM) throws OperationNonAutoriseeException, UtilisateurInexistantException, QCMInexistantException;
+
+
 
 }

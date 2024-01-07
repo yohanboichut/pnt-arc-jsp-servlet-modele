@@ -23,6 +23,13 @@ public class QuestionItem {
         }
     }
 
+    public String getQuestion() {
+        return question;
+    }
+
+    public String[] getReponses() {
+        return reponses;
+    }
 
     public void repondre(Utilisateur utilisateur, int idReponse) throws ReponseIncorrecteException {
         if (idReponse < 0 || idReponse >= reponses.length)

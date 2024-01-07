@@ -122,4 +122,17 @@ public class QCM {
     public Collection<Etudiant> getParticipants() {
         return participants;
     }
+
+    public LocalDateTime getDateQCM() {
+        return dateQCM;
+    }
+
+
+    public long getTempsDisponibleMillisecondes(){
+        return tempsDisponibleMillisecondes;
+    }
+
+    public QuestionItem[] getQuestions() {
+        return questions;
+    }
 }
