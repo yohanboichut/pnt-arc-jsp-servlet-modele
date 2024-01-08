@@ -1,10 +1,8 @@
 package facade;
 
+import dto.QCMDTO;
 import exceptions.*;
-import modele.QCM;
-import modele.QCMExtrait;
-import modele.Question;
-import modele.ResultatQCM;
+import modele.*;
 
 import java.util.Collection;
 
@@ -143,7 +141,7 @@ public interface FacadeModeleCompetitionQCM {
      * @throws OperationNonAutoriseeException  si l'opération n'est pas autorisée
      * @throws UtilisateurInexistantException si l'utilisateur n'existe pas
      */
-    Collection<QCMExtrait> getQCMsPretsPourCompetitions(String cleEtudiant) throws OperationNonAutoriseeException, UtilisateurInexistantException;
+    Collection<QCMDTO> getQCMsPretsPourCompetitions(String cleEtudiant) throws OperationNonAutoriseeException, UtilisateurInexistantException;
 
 
     /**
@@ -157,8 +155,12 @@ public interface FacadeModeleCompetitionQCM {
      * @throws QCMInexistantException         si le QCM n'existe pas
      */
 
-    QCMExtrait getQCM(String cleEtudiant, String cleQCM) throws OperationNonAutoriseeException, UtilisateurInexistantException, QCMInexistantException;
+    QCMDTO getQCM(String cleEtudiant, String cleQCM) throws OperationNonAutoriseeException, UtilisateurInexistantException, QCMInexistantException;
 
 
+
+
+
+    Collection<Score> getMesScores(String cleEtudiant) throws UtilisateurInexistantException, OperationNonAutoriseeException;
 
 }

@@ -1,5 +1,6 @@
 package facade;
 
+import dto.QCMDTO;
 import exceptions.*;
 import modele.*;
 
@@ -141,6 +142,15 @@ public class FacadeImpl implements FacadeGestionProfesseur, FacadeModeleCompetit
     }
 
     @Override
+    public void refuserUtilisateur(String cleUtilisateur, String cleUtilisateurAValider) throws OperationNonAutoriseeException, CompteNonConfirmeException, UtilisateurInexistantException {
+        getProfesseur(cleUtilisateur)  ;
+        Utilisateur utilisateurAValider = professeursAValider.get(cleUtilisateurAValider);
+        if (Objects.isNull(utilisateurAValider))
+            throw new UtilisateurInexistantException();
+        professeursAValider.remove(cleUtilisateurAValider);
+    }
+
+    @Override
     public String inscription(String email, String pseudo) throws EmailMalFormeException, PseudoManquantException {
         checkEmail(email);
         if (Objects.isNull(pseudo) || pseudo.isBlank())
@@ -212,6 +222,7 @@ public class FacadeImpl implements FacadeGestionProfesseur, FacadeModeleCompetit
         qcm.repondre(etudiant, idQuestion,idReponse);
     }
 
+
     @Override
     public void calculerResultat(String cleEtudiant, String cleQCM) throws QCMInexistantException, UtilisateurInexistantException, OperationNonAutoriseeException {
         Etudiant etudiant = getEtudiant(cleEtudiant);
@@ -234,16 +245,22 @@ public class FacadeImpl implements FacadeGestionProfesseur, FacadeModeleCompetit
     }
 
     @Override
-    public Collection<QCMExtrait> getQCMsPretsPourCompetitions(String cleEtudiant) throws OperationNonAutoriseeException, UtilisateurInexistantException {
+    public Collection<QCMDTO> getQCMsPretsPourCompetitions(String cleEtudiant) throws OperationNonAutoriseeException, UtilisateurInexistantException {
         getEtudiant(cleEtudiant);
-        return qcmsPrets.stream().filter(x -> x.estPublie()).map(x -> new QCMExtrait(x)).collect(Collectors.toList());
+        return qcmsPrets.stream().filter(x -> x.estPublie()).map(x -> new QCMDTO(x)).collect(Collectors.toList());
     }
 
     @Override
-    public QCMExtrait getQCM(String cleEtudiant, String cleQCM) throws OperationNonAutoriseeException, UtilisateurInexistantException, QCMInexistantException {
+    public QCMDTO getQCM(String cleEtudiant, String cleQCM) throws OperationNonAutoriseeException, UtilisateurInexistantException, QCMInexistantException {
         getEtudiant(cleEtudiant);
         QCM qcm = getQCM(cleQCM);
-        return new QCMExtrait(qcm);
+        return new QCMDTO(qcm);
+    }
+
+    @Override
+    public Collection<Score> getMesScores(String cleEtudiant) throws UtilisateurInexistantException, OperationNonAutoriseeException {
+        Etudiant etudiant = getEtudiant(cleEtudiant);
+        return etudiant.getScores().stream().collect(Collectors.toList());
     }
 
 

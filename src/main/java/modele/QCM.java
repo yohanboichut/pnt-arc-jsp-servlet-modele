@@ -106,7 +106,7 @@ public class QCM {
             throw new OperationNonAutoriseeException();
 
         if (Objects.isNull(resultat)) {
-            resultat = new ResultatQCM(questions, participants);
+            resultat = new ResultatQCM(cleQCM,description,questions, participants);
         }
         return resultat;
     }

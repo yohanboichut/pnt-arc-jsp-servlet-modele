@@ -1,5 +1,7 @@
 package modele;
 
+import dto.EtudiantDTO;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,10 +9,10 @@ import java.util.Map;
 public class ResultatQCM {
 
 
-    private Map<Etudiant,Score> scores=new HashMap<>();
+    private Map<EtudiantDTO,Score> scores=new HashMap<>();
 
-    public ResultatQCM(QuestionItem[] questions, Collection<Etudiant> participants) {
-        participants.stream().forEach(participant -> scores.put(participant, new Score(questions.length)));
+    public ResultatQCM(String cleQCM, String description, QuestionItem[] questions, Collection<Etudiant> participants) {
+        participants.stream().forEach(participant -> scores.put(new EtudiantDTO(participant.getEmail(), participant.getPseudo()), new Score(cleQCM, description, questions.length)));
         for(QuestionItem question : questions){
             for (int i= 0;i<question.reponses.length;i++){
                 if (question.reponses[i].equals(question.bonneReponse)){
@@ -20,10 +22,11 @@ public class ResultatQCM {
                 }
             }
         }
-        scores.entrySet().stream().forEach(entry -> entry.getKey().ajouterResultat(entry.getValue()));
+        participants.stream().forEach(participant -> {scores.entrySet().stream().filter(x -> x.getKey().email().equals(participant.getEmail())).forEach(x -> participant.ajouterResultat(x.getValue()));});
+
     }
 
-    public Map<Etudiant,Score> getScores(){
+    public Map<EtudiantDTO,Score> getScores(){
         return scores;
     }
 }

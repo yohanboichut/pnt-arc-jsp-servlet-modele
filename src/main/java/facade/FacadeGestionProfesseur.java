@@ -85,4 +85,17 @@ public interface FacadeGestionProfesseur {
      * @throws UtilisateurInexistantException si l'utilisateur n'existe pas
      */
     void validerUtilisateur(String cleUtilisateur, String cleUtilisateurAValider) throws OperationNonAutoriseeException, CompteNonConfirmeException, UtilisateurInexistantException;
+
+
+    /**
+     * Refuse un utilisateur en fonction de la clé utilisateur et de la clé de validation fournies.
+     *
+     * @param  cleUtilisateur            La clé utilisateur à refuser.
+     * @param  cleUtilisateurAValider    La clé de validation de l'utilisateur à refuser.
+     * @throws OperationNonAutoriseeException  Si l'opération n'est pas autorisée.
+     * @throws CompteNonConfirmeException     Si le compte utilisateur n'est pas confirmé.
+     * @throws UtilisateurInexistantException Si l'utilisateur n'existe pas.
+     */
+
+    void refuserUtilisateur(String cleUtilisateur, String cleUtilisateurAValider) throws OperationNonAutoriseeException, CompteNonConfirmeException, UtilisateurInexistantException;
 }

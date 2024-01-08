@@ -1,11 +1,13 @@
-package modele;
+package dto;
+
+import modele.QCM;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public class QCMExtrait {
+public class QCMDTO {
 
 
     private String cleQCM;
@@ -16,25 +18,25 @@ public class QCMExtrait {
 
     private long tempsDisponibleMillisecondes;
 
-    private QuestionExtraite[] questions;
+    private QuestionDTO[] questions;
 
     private Collection<String> participants = new ArrayList<>();
 
 
-    public QCMExtrait(){
+    public QCMDTO(){
 
     }
 
-    public QCMExtrait(QCM qcm){
+    public QCMDTO(QCM qcm){
         this.dateQCM = qcm.getDateQCM();
         this.description = qcm.getDescription();
         this.cleQCM = qcm.getCleQCM();
         this.tempsDisponibleMillisecondes = qcm.getTempsDisponibleMillisecondes();
-        this.questions = new QuestionExtraite[qcm.getQuestions().length];
+        this.questions = new QuestionDTO[qcm.getQuestions().length];
         this.participants = qcm.getParticipants().stream().map(x -> x.getPseudo()).collect(Collectors.toList());
 
         for (int i = 0; i < qcm.getQuestions().length; i++) {
-            this.questions[i] = new QuestionExtraite(qcm.getQuestions()[i].getQuestion(), qcm.getQuestions()[i].getReponses());
+            this.questions[i] = new QuestionDTO(qcm.getQuestions()[i].getQuestion(), qcm.getQuestions()[i].getReponses());
         }
 
     }
@@ -56,7 +58,7 @@ public class QCMExtrait {
         return tempsDisponibleMillisecondes;
     }
 
-    public QuestionExtraite[] getQuestions() {
+    public QuestionDTO[] getQuestions() {
         return questions;
     }
 

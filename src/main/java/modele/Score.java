@@ -6,8 +6,13 @@ public class Score {
 
     private int nbBonnesReponses;
 
+    private String cleQCM;
+    private String description;
 
-    public Score(int nbQuestions) {
+
+    public Score(String cleQCM, String description, int nbQuestions) {
+        this.cleQCM = cleQCM;
+        this.description = description;
         this.nbQuestions = nbQuestions;
         this.nbBonnesReponses = 0;
     }
@@ -21,5 +26,11 @@ public class Score {
         return ((double) nbBonnesReponses / nbQuestions)*100;
     }
 
+    public String getCleQCM() {
+        return cleQCM;
+    }
 
+    public String getDescription() {
+        return description;
+    }
 }
