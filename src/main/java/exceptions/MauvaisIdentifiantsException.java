@@ -1,2 +1,4 @@
-package exceptions;public class MauvaisIdentifiantsException extends Exception {
+package exceptions;
+
+public class MauvaisIdentifiantsException extends Exception {
 }

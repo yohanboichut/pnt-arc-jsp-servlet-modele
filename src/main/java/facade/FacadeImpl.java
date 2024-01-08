@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class FacadeImpl implements FacadeGestionProfesseur, FacadeModeleCompetitionQCM{
+public class FacadeImpl implements FacadeGestionProfesseur, FacadeModeleCompetitionQCM, FonctionnalitesCommunes{
 
     Map<String, Utilisateur> utilisateurs = new HashMap<>();
 
@@ -264,4 +264,13 @@ public class FacadeImpl implements FacadeGestionProfesseur, FacadeModeleCompetit
     }
 
 
+    @Override
+    public Utilisateur getUtilisateur(String email, String cleUtilisateur) throws MauvaisIdentifiantsException {
+        Utilisateur utilisateur = utilisateurs.get(cleUtilisateur);
+        if (utilisateur == null)
+            throw new MauvaisIdentifiantsException();
+        if (!utilisateur.getEmail().equals(email))
+            throw new MauvaisIdentifiantsException();
+        return utilisateur;
+    }
 }
