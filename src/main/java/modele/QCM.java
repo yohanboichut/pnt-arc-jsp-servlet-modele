@@ -20,7 +20,7 @@ public class QCM {
 
     private LocalDateTime dateQCM;
 
-    private long tempsDisponibleMillisecondes;
+    private long tempsDisponibleSecondes;
 
     private QuestionItem[] questions;
 
@@ -35,7 +35,7 @@ public class QCM {
         this.createur = createur;
         cleQCM = UUID.randomUUID().toString();
         this.description = description;
-        this.tempsDisponibleMillisecondes = tempsDisponible;
+        this.tempsDisponibleSecondes = tempsDisponible;
         this.questions = new QuestionItem[questions.length];
         for (int i = 0; i < questions.length; i++) {
             this.questions[i] = new QuestionItem(questions[i].question(),
@@ -48,7 +48,7 @@ public class QCM {
     }
 
     public void inscription(Etudiant participant) throws QCMDejaInscritException, QCMTermineException {
-        if (LocalDateTime.now().isAfter(dateQCM.plusSeconds(tempsDisponibleMillisecondes)))
+        if (LocalDateTime.now().isAfter(dateQCM.plusSeconds(tempsDisponibleSecondes)))
             throw new QCMTermineException();
         if (participants.contains(participant))
             throw new QCMDejaInscritException();
@@ -87,7 +87,7 @@ public class QCM {
     public void repondre(Etudiant utilisateur, int idQuestion, int idReponse) throws ReponseIncorrecteException, QCMTermineException, EtudiantNonInscritException {
         if (!participants.contains(utilisateur))
             throw new EtudiantNonInscritException();
-        if (LocalDateTime.now().isAfter(dateQCM.plusSeconds(tempsDisponibleMillisecondes)))
+        if (LocalDateTime.now().isAfter(dateQCM.plusSeconds(tempsDisponibleSecondes)))
             throw new QCMTermineException();
         if (idQuestion < 0 || idQuestion >= questions.length)
             throw new ReponseIncorrecteException();
@@ -102,7 +102,7 @@ public class QCM {
     public ResultatQCM calculerResultat() throws OperationNonAutoriseeException {
         if (!estPublie())
             throw new OperationNonAutoriseeException();
-        if (LocalDateTime.now().isBefore(dateQCM.plusSeconds(tempsDisponibleMillisecondes)))
+        if (LocalDateTime.now().isBefore(dateQCM.plusSeconds(tempsDisponibleSecondes)))
             throw new OperationNonAutoriseeException();
 
         if (Objects.isNull(resultat)) {
@@ -128,8 +128,8 @@ public class QCM {
     }
 
 
-    public long getTempsDisponibleMillisecondes(){
-        return tempsDisponibleMillisecondes;
+    public long getTempsDisponibleSecondes(){
+        return tempsDisponibleSecondes;
     }
 
     public QuestionItem[] getQuestions() {

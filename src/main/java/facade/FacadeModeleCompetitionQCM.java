@@ -44,6 +44,17 @@ public interface FacadeModeleCompetitionQCM {
 
 
     /**
+     * Récupère une collection d'objets QCM qui ont déjà fait l'objet d'une publication et qui sont terminés.
+     *
+     * @param  cleEtudiant  la clé unique de l'étudiant
+     * @return              une collection d'objets QCM
+     * @throws UtilisateurInexistantException    si l'étudiant n'existe pas
+     * @throws OperationNonAutoriseeException    si l'opération n'est pas autorisée
+     */
+    Collection<QCM> getMesQCMsTermines(String cleEtudiant) throws UtilisateurInexistantException, OperationNonAutoriseeException;
+
+
+    /**
      * Récupère une collection d'objets QCM prêts à être publiés.
      *
      * @param  cleEtudiant  la clé unique de l'étudiant

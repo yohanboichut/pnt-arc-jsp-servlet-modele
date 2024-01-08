@@ -4,6 +4,7 @@ import dto.QCMDTO;
 import exceptions.*;
 import modele.*;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -16,10 +17,12 @@ public class FacadeImpl implements FacadeGestionProfesseur, FacadeModeleCompetit
 
 
 
+
     Collection<QCM> qcmsAValider = new ArrayList<>();
 
-    Collection<QCM> qcmsPrets = new ArrayList<>();
-    Collection<QCM> qcmsTermines= new ArrayList<>();
+    // QCM qui ne sont pas ceux à valider
+    Collection<QCM> qcms = new ArrayList<>();
+
 
 
     public FacadeImpl() {
@@ -97,7 +100,7 @@ public class FacadeImpl implements FacadeGestionProfesseur, FacadeModeleCompetit
         else {
             QCM qcmValide = qcm.get();
             qcmValide.valider();
-            qcmsPrets.add(qcmValide);
+            qcms.add(qcmValide);
             qcmsAValider.remove(qcmValide);
         }
         //TODO : valider le QCM si l'utilisateur est un professeur
@@ -180,9 +183,16 @@ public class FacadeImpl implements FacadeGestionProfesseur, FacadeModeleCompetit
     }
 
     @Override
+    public Collection<QCM> getMesQCMsTermines(String cleEtudiant) throws UtilisateurInexistantException, OperationNonAutoriseeException {
+        Etudiant etudiant = getEtudiant(cleEtudiant);
+
+        return qcms.stream().filter(x -> x.getCreateur().equals(etudiant)).filter(x -> x.getDateQCM().plusSeconds(x.getTempsDisponibleSecondes()).isBefore(LocalDateTime.now())).collect(Collectors.toList());
+    }
+
+    @Override
     public Collection<QCM> getMesQCMsPretsAEtrePublies(String cleEtudiant) throws UtilisateurInexistantException, OperationNonAutoriseeException {
         Etudiant etudiant = getEtudiant(cleEtudiant);
-        return qcmsPrets.stream().filter(x -> x.getCreateur().equals(etudiant)).filter(x -> x.estValide()).
+        return qcms.stream().filter(x -> x.getCreateur().equals(etudiant)).filter(x -> x.estValide()).
                 filter(x -> !x.estPublie()).
                 collect(Collectors.toList());
     }
@@ -199,7 +209,7 @@ public class FacadeImpl implements FacadeGestionProfesseur, FacadeModeleCompetit
     }
 
     private QCM getQCM(String cleQCM) throws QCMInexistantException {
-        Optional<QCM> qcm = qcmsPrets.stream().filter(x -> x.getCleQCM().equals(cleQCM)).findFirst();
+        Optional<QCM> qcm = qcms.stream().filter(x -> x.getCleQCM().equals(cleQCM)).findFirst();
         if (qcm.isEmpty())
             throw new QCMInexistantException();
         return qcm.get();
@@ -247,7 +257,7 @@ public class FacadeImpl implements FacadeGestionProfesseur, FacadeModeleCompetit
     @Override
     public Collection<QCMDTO> getQCMsPretsPourCompetitions(String cleEtudiant) throws OperationNonAutoriseeException, UtilisateurInexistantException {
         getEtudiant(cleEtudiant);
-        return qcmsPrets.stream().filter(x -> x.estPublie()).map(x -> new QCMDTO(x)).collect(Collectors.toList());
+        return qcms.stream().filter(x -> x.estPublie()).map(x -> new QCMDTO(x)).collect(Collectors.toList());
     }
 
     @Override

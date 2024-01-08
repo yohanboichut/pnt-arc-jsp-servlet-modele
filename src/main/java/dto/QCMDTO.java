@@ -31,7 +31,7 @@ public class QCMDTO {
         this.dateQCM = qcm.getDateQCM();
         this.description = qcm.getDescription();
         this.cleQCM = qcm.getCleQCM();
-        this.tempsDisponibleMillisecondes = qcm.getTempsDisponibleMillisecondes();
+        this.tempsDisponibleMillisecondes = qcm.getTempsDisponibleSecondes();
         this.questions = new QuestionDTO[qcm.getQuestions().length];
         this.participants = qcm.getParticipants().stream().map(x -> x.getPseudo()).collect(Collectors.toList());
 
