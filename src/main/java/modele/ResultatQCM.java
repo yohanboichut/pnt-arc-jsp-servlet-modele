@@ -22,7 +22,7 @@ public class ResultatQCM {
                 }
             }
         }
-        participants.stream().forEach(participant -> {scores.entrySet().stream().filter(x -> x.getKey().email().equals(participant.getEmail())).forEach(x -> participant.ajouterResultat(x.getValue()));});
+        participants.stream().forEach(participant -> {scores.entrySet().stream().filter(x -> x.getKey().getEmail().equals(participant.getEmail())).forEach(x -> participant.ajouterResultat(x.getValue()));});
 
     }
 

@@ -38,8 +38,8 @@ public class QCM {
         this.tempsDisponibleSecondes = tempsDisponible;
         this.questions = new QuestionItem[questions.length];
         for (int i = 0; i < questions.length; i++) {
-            this.questions[i] = new QuestionItem(questions[i].question(),
-                    questions[i].reponses(), questions[i].bonneReponse());
+            this.questions[i] = new QuestionItem(questions[i].getQuestion(),
+                    questions[i].getReponses(), questions[i].getBonneReponse());
         }
     }
 
