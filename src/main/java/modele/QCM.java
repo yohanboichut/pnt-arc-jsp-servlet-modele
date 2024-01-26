@@ -47,6 +47,10 @@ public class QCM {
         return createur;
     }
 
+    public int getNbQuestions(){
+        return questions.length;
+    }
+
     public void inscription(Etudiant participant) throws QCMDejaInscritException, QCMTermineException {
         if (LocalDateTime.now().isAfter(dateQCM.plusSeconds(tempsDisponibleSecondes)))
             throw new QCMTermineException();
