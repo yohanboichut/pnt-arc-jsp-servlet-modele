@@ -35,7 +35,7 @@ public abstract class AbstractUtilisateur implements Utilisateur {
     }
 
     @Override
-    public TypeUtilisateur getTypeUtilisateur() {
-        return typeUtilisateur;
+    public String getTypeUtilisateur() {
+        return typeUtilisateur.name();
     }
 }

@@ -61,7 +61,7 @@ public class FacadeImpl implements FacadeGestionProfesseur, FacadeModeleCompetit
         Utilisateur utilisateur = getUtilisateur(cleAuthentification);
         try {
             Professeur professeur = (Professeur) utilisateur;
-            if (professeur.getTypeUtilisateur() == Utilisateur.TypeUtilisateur.PROFESSEUR_NON_VERIFIE)
+            if (professeur.getTypeUtilisateur().equals(Utilisateur.TypeUtilisateur.PROFESSEUR_NON_VERIFIE.name()))
                 throw new CompteNonConfirmeException();
             return professeur;
         }

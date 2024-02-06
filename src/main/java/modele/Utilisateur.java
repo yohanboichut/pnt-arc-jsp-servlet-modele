@@ -27,10 +27,9 @@ public interface Utilisateur {
     String getCleAuthentification();
 
     /**
-     *
      * @return le type d'utilisateur
      */
-    TypeUtilisateur getTypeUtilisateur();
+    String getTypeUtilisateur();
 
     public enum TypeUtilisateur {
         ETUDIANT,
