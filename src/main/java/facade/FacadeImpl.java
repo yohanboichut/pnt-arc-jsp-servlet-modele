@@ -276,11 +276,13 @@ public class FacadeImpl implements FacadeGestionProfesseur, FacadeModeleCompetit
 
     @Override
     public Utilisateur getUtilisateur(String email, String cleUtilisateur) throws MauvaisIdentifiantsException {
-        Utilisateur utilisateur = utilisateurs.get(cleUtilisateur);
+        Utilisateur utilisateur = utilisateurs.containsKey(cleUtilisateur)?utilisateurs.get(cleUtilisateur):
+                professeursAValider.get(cleUtilisateur);
         if (utilisateur == null)
             throw new MauvaisIdentifiantsException();
-        if (!utilisateur.getEmail().equals(email))
+        if (!utilisateur.getEmail().equals(email) || !utilisateur.getCleAuthentification().equals(cleUtilisateur))
             throw new MauvaisIdentifiantsException();
+
         return utilisateur;
     }
 }
